@@ -19,13 +19,13 @@ app.use('/api', routes);
   });
 });*/
 
-/*
+
 app.get('*', (req, res) => {
   res.sendFile('index.html', { root: path.join(__dirname, '/public') });
 });
-*/
+
 
 app.listen(PORT, () => {
-  db.sequelize.sync({ force: true });
+  db.sequelize.sync({ force: false });
   console.log(`Server\'s up & up! PORT: ${PORT}`);
 });

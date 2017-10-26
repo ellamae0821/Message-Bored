@@ -1,0 +1,13 @@
+<div class="usersList">
+  <h1>USER LISTS</h1>
+  <li ng-repeat="user in UserService.users">
+    <h4>ID# : {{user.id}}</h4>
+    <p>Name: {{user.name}}</p>
+<!--     <p>UpdatedAt: {{user.updatedAt}}</p> -->
+    <p>Member Since: {{user.createdAt}}</p>
+  </li>
+
+  <div class = "addUser">
+    <a ng-href="/users/{{user.id}}"><h1>{{user.name}}</h1></a>
+  </div>
+</div>

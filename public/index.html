@@ -7,23 +7,42 @@
 </head>
 <body ng-app="myApp">
 
-  <div class="nav">
-    <a ng-href="/">Home</a>
-    <a ng-href="/login">Login</a>
-    <a ng-href="/register">Register</a>
-    <a ng-href="/users">Users</a>
+
+
+  <div class="navContainer">
+    <nav class=navOptions>
+      <a ng-href="/">Home</a>
+      <a ng-href="/login">Login</a>
+      <a ng-href="/register">Register</a>
+      <a ng-href="/users">Users</a>
+    </nav>
+
+  </div>
+<h1> Hello WOrld!</h1>
+
+
+
+<!--
+  <div class="topicList">
+
+  Topic List HERE<br>
+  Topic List HERE<br>
+  Topic List HERE<br>
+  </div> -->
+
+  <div ng-view class="contents">
+
+
   </div>
 
-  <div class="sidebar">
 
-  </div>
-
-  <div ng-view>
-    Loading...
-  </div>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular.js" type="text/javascript"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular-route.js" type="text/javascript"></script>
-  <script src="/js/myapp.js" type="text/javascript"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular.min.js" type="text/javascript"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular-route.js"></script>
+  <script src="/scripts/app.js" type="text/javascript"></script>
+  <script src="/scripts/services.js" type="text/javascript"></script>
+  <script src="/scripts/controllers/topics.controller.js" type="text/javascript"></script>
+  <script src="/scripts/controllers/users.controller.js" type="text/javascript"></script>
 </body>
 </html>
+
+
