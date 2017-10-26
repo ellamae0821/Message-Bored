@@ -13,6 +13,7 @@ router.get('/', (req, res) => {
 
 
 router.post('/', (req, res) => {
+//  console.log(req.body.name);
   return User.create({name : req.body.name})
   .then( (data) => {
     res.json(data);
@@ -23,11 +24,12 @@ router.post('/', (req, res) => {
 });
 
 
-router.get('/:username', (req, res) => {
+router.get('/:id', (req, res) => {
+  console.log('ID ISSSSS: ', req.params.id);
   var userID = parseInt(req.params.id);
   return User.findById(userID)
-  .then( (users) => {
-    res.json(users);
+  .then( (user) => {
+    res.send(user);
   })
   .catch((err) => {
     console.log(err);

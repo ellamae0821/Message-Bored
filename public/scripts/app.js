@@ -16,10 +16,14 @@ var app = angular.module('myApp')
     templateUrl: '/views/register.html',
     controller: 'RegisterController'
   })
-/*  .when('/users', {
+  .when('/users', {
     templateUrl: '/views/users.html',
     controller: 'UserController'
-  })*/
+  })
+  .when('/users/:id', {
+    templateUrl: '/views/singleUser.html',
+    controller: 'SingleUserController'
+  })
   .otherwise({
     templateUrl:'<h1>INSERT 404 ERROR HERE</h1>'
   });

@@ -6,17 +6,4 @@ function($scope, $location, UserService){
 
   $scope.UserService = UserService;
 
-  $scope.name = '';
-
-
-  $scope.createUser = function() {
-    console.log($scope.name);
-    UserService.addUser($scope.name);
-  };
-
-}]);
-
-// Log in user right when the request to create user returns
-// set the user to res.data.name to local storage
-
-
+}])

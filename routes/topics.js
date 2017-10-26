@@ -21,11 +21,11 @@ router.post((req, res) => {
     created_by: req.body.created_by
   })
   .then((topics) => {
-  console.log('we posted topic');
-  res.json(topics);
+    console.log('we posted topic');
+    res.json(topics);
   })
   .catch((err) => {
-  console.log(err);
+    console.log(err);
   });
 });
 

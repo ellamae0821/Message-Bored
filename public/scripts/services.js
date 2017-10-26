@@ -1,9 +1,10 @@
 /*jshint esversion:6*/
 angular.module('myApp')
-.service('UserService', ['$http', function($http) {
+.service('UserService', ['$http', '$routeParams', function($http, $routeParams) {
   var url = 'api/users';
   var self = this;
   this.users = [];
+
 
   $http.get(url)
   .then(function(response){
@@ -13,11 +14,24 @@ angular.module('myApp')
   this.getUsers = function (username) {
     return users; };
 
-  this.getUser = function(username){
-    return $http.get(`url/${username}`);};
+  this.getUser = function(userId){
+    return $http.get(`/api/users/${userId}`)
+    .then ( function (response) {
+      return response;
+    });
+  };
 
-  this.addUser = function(dataObj){
-    return $http.post('api/users', dataObj);
+
+  this.getUserId = function(userId){
+    return $http.get(`url/${userId}`);
+  };
+
+
+  this.addUser = function(data){
+    return $http.post(url, JSON.stringify({name: data}))
+    .then ( (data) => {
+      this.users.push(data.data);
+    });
   };
 
   //how to return the messages from USER>??
