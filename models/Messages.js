@@ -6,7 +6,7 @@ module.exports = function (sequelize, DataTypes) {
   });
 
   Message.associate = function (models) {
-    Message.belongsTo(models.topic);
+    Message.belongsTo(models.user, {foreignKey: 'author_id'});
   };
   return Message;
 };

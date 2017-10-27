@@ -6,9 +6,8 @@ module.exports = function (sequelize, DataTypes) {
   });
 
   Topic.associate = function (models) {
-//    Topic.hasMany(models.message);
     Topic.belongsTo(models.user, {foreignKey: 'created_by'});
-    Topic.hasMany(models.message);
+    Topic.hasMany(models.message, {foreignKey: 'topic_id'});
 
   };
   return Topic;

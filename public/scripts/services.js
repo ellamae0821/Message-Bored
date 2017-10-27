@@ -1,9 +1,10 @@
 /*jshint esversion:6*/
 angular.module('myApp')
-.service('UserService', ['$http', '$routeParams', function($http, $routeParams) {
+.service('UserService', ['$http', '$routeParams', '$location', $rootScope, function($http, $routeParams, $location, $rootScope) {
   var url = 'api/users';
   var self = this;
   this.users = [];
+  this.user = [];
 
 
   $http.get(url)
@@ -11,8 +12,8 @@ angular.module('myApp')
     self.users = response.data;
   });
 
-  this.getUsers = function (username) {
-    return users; };
+/*  this.getUsers = function (username) {
+    return users; };*/
 
   this.getUser = function(userId){
     return $http.get(`/api/users/${userId}`)
@@ -21,18 +22,44 @@ angular.module('myApp')
     });
   };
 
-
+/*
   this.getUserId = function(userId){
     return $http.get(`url/${userId}`);
   };
-
-
-  this.addUser = function(data){
-    return $http.post(url, JSON.stringify({name: data}))
+*/
+  this.addUser = function(user){
+    console.log('LOG OF ADDUSER -USER :',user);
+    return $http.post(url, JSON.stringify({name: user}))
     .then ( (data) => {
       this.users.push(data.data);
+
     });
   };
+
+
+/*  $http.post(usersUrl, user)
+  .then(function(response) {
+    console.log('Added user to backend database!');
+    });
+  }*/
+
+  this.login = function(user){
+    let userData = {
+      username: user.name,
+      password: user.password
+    };
+
+    $http.post('/api/login', userData)
+    .then(function (response){
+      console.log('HELLO!!! AM I IN?');
+      $location.path('/');
+      $rootScope.authorized = true;
+    })
+    .catch (function (err){
+      console.log(err);
+    });
+  };
+
 
   //how to return the messages from USER>??
 

@@ -6,4 +6,4 @@ function($scope, $location, UserService){
 
   $scope.UserService = UserService;
 
-}])
+}]);
