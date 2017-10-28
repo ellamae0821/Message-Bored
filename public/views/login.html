@@ -1,7 +1,10 @@
 <div class="loginWrapper">
     <h2>Log in as: <em></em></h2>
-    <input type="text" ng-model="user.name" placeholder="Username">
-    <input type="password" ng-model="user.password" placeholder="Password">
-    <input type="button" value="Login" ng-click="loginUser()">
+    <form>
+      <input type="text" ng-model="user.name" placeholder="Username">
+      <input type="password" ng-model="user.password" placeholder="Password">
+      <button ng-click="loginUser()">Login ME</button>
+     <!--  <input type="button" value="Login" ng-click="loginUser()"> -->
+    </form>
   </div>
 </div>

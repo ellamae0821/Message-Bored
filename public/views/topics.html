@@ -1,8 +1,19 @@
 
-<div>
-  <ul>
-    <li ng-repeat="topic in topics | orderBy:'createdAt'">
-      <h4>{{ topic.name }}</h4>
-    </li>
-  </ul>
+<h1>
+  BORED?,  MESSAGE-BORED!!!
+</h1>
+
+<div class="topicList">
+  TOPIC LIST :
+  <div ng-repeat="topic in TopicService.topics track by $index">
+    <li>{{topic.name}} - {{user.name}}</li>
+  </div>
+</div>
+
+<div class="addTopic">
+  <form>
+    <label for="title">Add A Topic</label><br>
+    <input type="text" class="textfield" name="name" placeholder="Create Title" ng-model="topic.name"><br>
+    <input type="submit" value="Add Topic" class="btn" ng-click="createTopic()">
+  </form>
 </div>

@@ -1,10 +1,11 @@
 /*jshint esversion:6*/
 angular.module('myApp')
-.service('UserService', ['$http', '$routeParams', '$location', $rootScope, function($http, $routeParams, $location, $rootScope) {
+.service('UserService', ['$http', '$routeParams', '$location', function($http, $routeParams, $location) {
   var url = 'api/users';
   var self = this;
   this.users = [];
   this.user = [];
+
 
 
   $http.get(url)
@@ -12,8 +13,6 @@ angular.module('myApp')
     self.users = response.data;
   });
 
-/*  this.getUsers = function (username) {
-    return users; };*/
 
   this.getUser = function(userId){
     return $http.get(`/api/users/${userId}`)
@@ -22,85 +21,73 @@ angular.module('myApp')
     });
   };
 
-/*
-  this.getUserId = function(userId){
-    return $http.get(`url/${userId}`);
-  };
-*/
-  this.addUser = function(user){
-    console.log('LOG OF ADDUSER -USER :',user);
-    return $http.post(url, JSON.stringify({name: user}))
-    .then ( (data) => {
-      this.users.push(data.data);
-
-    });
-  };
-
-
-/*  $http.post(usersUrl, user)
-  .then(function(response) {
-    console.log('Added user to backend database!');
-    });
-  }*/
-
-  this.login = function(user){
-    let userData = {
-      username: user.name,
-      password: user.password
+  this.addUser = function(newUser){
+    var user = {
+      name: newUser.name,
+      password: newUser.password
     };
-
-    $http.post('/api/login', userData)
-    .then(function (response){
-      console.log('HELLO!!! AM I IN?');
+    return $http.post('api/register', JSON.stringify(user))
+    .then ( (response) => {
+      console.log(user);
+      this.users.push(response.data);
       $location.path('/');
-      $rootScope.authorized = true;
-    })
-    .catch (function (err){
-      console.log(err);
+      return response.data;
     });
   };
+
+  this.login = function(userLogin){
+    let user = {
+      name: userLogin.name,
+      password: userLogin.password
+    };
+    console.log('LOGGING IN:', userLogin);
+    return $http.post('api/login', user)
+    .then(function (response){
+      console.log('LOGIN RESPONSES', response);
+      $location.path('/');
+      return response.data;
+    });
+  };
+
 
 
   //how to return the messages from USER>??
+
+
 
 }])
 
 .service('TopicService', ['$http', function($http){
   var url = '/api/topics';
   var self = this;
-//}]);
-  //collection of books
-  this.topics = [];
 
+  this.topics = [];
+  this.topic = [];
   //initialization
   $http.get(url)
   .then(function(response){
     self.topics = response.data;
   });
-  //read methods
+
+  this.addTopic = function(newTopic){
+    var topic = {
+      name: newTopic.name
+    };
+    console.log(newTopic);
+    return $http.post('api/topics', topic)
+    .then ( (response) => {
+      self.topics.push(response.data);
+      return response.data;
+    });
+  };
+
+
   this.getTopics = function() {
-    return topics; };
+    return this.topics; };
 
   this.getTopic = function(index) {
     return books[index];};
 
-  //create method
-  this.addTopic = function(givenTopic) {
-    if(!givenTopic) {
-      return; }
-      //create on frontend
-      var topic = {
-        name: givenTopic.title,
-        author: givenTopic.created_by
-      };
-      self.books.push(topic);
-      //created on backend
-      $http.post(url, topic)
-      .then (function (response) {
-        console.log('Topic created on backend');
-      });
-    };
-  //reminder to get messages from every TOPIC
   }
 ])
 

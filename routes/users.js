@@ -5,15 +5,9 @@ const models = require('../models');
 const User = models.user;
 
 
-router.post('/login', (req,res) => {
-  console.log("ROUTES-USER-POST LOGIN:", req.user);
-  return User.findOne({
-    where: {name: req.body.name}
-  })
-  .then((user)=> {
-    res.json(user.id);
-  });
-});
+
+
+
 
 
 

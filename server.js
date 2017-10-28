@@ -14,18 +14,21 @@ const saltRounds = 12;
 const redis = require('connect-redis')(session);
 
 const app = express();
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
 app.use(express.static('public'));
 app.use(session({
-  store: new redis(),
+//  store: new redis(), - as per JON.
   secret: 'keyboard cat',
   resave: false,
   saveUninitialized: false
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use('/api', routes);
 
 passport.serializeUser((user, done) => {
-  console.log('serializing');
+  console.log('serializing', user);
   return done(null, {
     id: user.id,
     name: user.name
@@ -41,10 +44,10 @@ passport.deserializeUser((user, done) => {
       id: user.id,
       name: user.name
     });
-  });
+  }); // RETURN WHAT IF NO USERS after droping table
 });
 
-passport.use(new LocalStrategy( {usernameField: "name"}, function (name, password, done) {
+passport.use(new LocalStrategy( {usernameField: 'name'}, function (name, password, done) {
   db.user.findOne({where: {name: name}})
     .then((user) => {
       if(user === null){
@@ -66,13 +69,46 @@ passport.use(new LocalStrategy( {usernameField: "name"}, function (name, passwor
     });
 }));
 
-app.use(bodyParser.urlencoded({extended: false}));
-app.use(bodyParser.json());
-app.use('/api', routes);
+
+app.post('/api/login', passport.authenticate('local'), function (req, res) {
+  const user = req.user;
+    res.json(user);
+});
+
+
+app.get('/logout', (req, res) => {
+  req.logout();
+  res.sendStatus(200);
+});
+
+app.post('/api/register', (req, res) => {
+  bcrypt.genSalt(saltRounds, function(err, salt){
+    bcrypt.hash(req.body.password, salt, function(err, hash){
+      db.user.create({
+        name: req.body.name,
+        password: hash
+      })
+      .then((user) => {
+        res.json(user);
+      })
+      .catch((error) => {
+        return res.send("ERROR , invalid username and or password ");
+      });
+    });
+  });
+});
+
+function isAuthenticated(req, res, next){
+  if(req.isAuthenticated()) {next();}
+  else{res.redirect('/');
+  }
+}
+
 
 app.get('*', (req, res) => {
   res.sendFile('index.html', { root: path.join(__dirname, '/public') });
 });
+
 
 
 app.listen(PORT, () => {

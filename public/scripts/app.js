@@ -5,7 +5,7 @@ var app = angular.module('myApp')
 
   $routeProvider
   .when('/', {
-    templateUrl: '/views/home.html',
+    templateUrl: '/views/topics.html',
     controller: 'TopicsController'
   })
   .when('/login', {

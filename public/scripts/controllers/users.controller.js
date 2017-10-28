@@ -6,4 +6,17 @@ function($scope, $location, UserService){
 
   $scope.UserService = UserService;
 
+
 }]);
+/* this.addUser = function(newUser){
+    var user = {
+      name: newUser.name,
+      password: newUser.password
+    };
+    return $http.post(`u`, user)
+    .then ( (response) => {
+      self.users.push(response.data);
+      $location.path('/');
+    });
+  };*/
+
