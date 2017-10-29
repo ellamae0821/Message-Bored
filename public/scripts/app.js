@@ -24,6 +24,10 @@ var app = angular.module('myApp')
     templateUrl: '/views/singleUser.html',
     controller: 'SingleUserController'
   })
+  .when('/topics/:id', {
+    templateUrl: '/views/topic.html',
+    controller: 'TopicsController'
+  })
   .otherwise({
     templateUrl:'<h1>INSERT 404 ERROR HERE</h1>'
   });

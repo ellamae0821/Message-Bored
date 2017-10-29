@@ -7,9 +7,18 @@ module.exports = function (sequelize, DataTypes) {
   });
 
   User.associate = function (models) {
-    User.hasMany(models.message, {foreignKey: 'author_id', allowNull: false});
+/*    User.hasMany(models.message, {foreignKey: 'author_id', allowNull: false});*/
   //  User.hasMany(models.topic);
+    User.hasMany(models.topic, {foreignKey: 'author_id', allowNull: false});
   };
   return User;
 };
 
+/*  User.associate = function (models) {
+    User.hasMany(models.message, {foreignKey: { allowNull: false }, onDelete: 'CASCADE' });
+  //  User.hasMany(models.topic);
+    User.hasMany(models.topic, {foreignKey: { allowNull: false }, onDelete: 'CASCADE' });
+  };
+  return User;
+};
+*/

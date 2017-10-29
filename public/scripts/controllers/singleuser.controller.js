@@ -11,8 +11,6 @@ function($scope, UserService,$routeParams ) {
     $scope.user = data.data;
 
   });
-
-
 }]);
 
 

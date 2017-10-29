@@ -3,7 +3,7 @@ const express = require('express');
 const router = express.Router();
 const models = require('../models');
 const Topic = models.topic;
-
+const Users = models.user;
 
 router.get('/', (req, res) => {
   console.log('GETTING ROUTE /');
@@ -14,32 +14,49 @@ router.get('/', (req, res) => {
 });
 
 
+
+// router.post('/', (req, res) => {
+//   console.log('TOPICS ROUTE - REQ USER',req.user);
+//   return Topic.create({
+//     name: req.body.name,
+//     created_by: req.user.id,
+//   })
+//   .then((topic) => {
+//     return Users.findOne({where: {
+//       id: req.user.id
+//     }})
+//     .then((user) => {
+//       let topicInfo = {
+//         topic: topic,
+//         user: user
+//       };
+//       return res.json(topicInfo);
+//     });
+
+//   });
+// });
+
 router.post('/', (req, res) => {
-  console.log('HEEEEERE!');
   return Topic.create({
     name: req.body.name,
-    author_id: req.user.id
+    created_by: req.user.id,
   })
   .then((topic) => {
     return res.json(topic);
   });
 });
 
-/*
-router.post((req, res) => {
-  console.log('AT TOPICs POSTING REQ.BODY LOg', req.body);
-  return Topic.create({
-    name: req.body.name,
-    author_id : req.user.id
+router.get('/:id', (req, res) => {
+  console.log('Router is getting single TOPIC id for #:', req.params.id);
+  var topicId = parseInt(req.params.id);
+  return Topic.findById(topicId)
+  .then( (topic) => {
+    res.send(topic);
   })
-  .then((topics) => {
-    console.log('we posted topic');
-    res.json(topics);
-  })
-  .catch((err) => {
+  .catch( (err) => {
     console.log(err);
   });
-});*/
+});
 
 
 

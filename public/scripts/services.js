@@ -48,16 +48,11 @@ angular.module('myApp')
       return response.data;
     });
   };
-
-
-
   //how to return the messages from USER>??
-
-
 
 }])
 
-.service('TopicService', ['$http', function($http){
+.service('TopicService', ['$http', '$routeParams', function($http , $routeParams){
   var url = '/api/topics';
   var self = this;
 
@@ -71,22 +66,37 @@ angular.module('myApp')
 
   this.addTopic = function(newTopic){
     var topic = {
-      name: newTopic.name
+      name: newTopic.name,
+      created_by: newTopic.created_by
     };
-    console.log(newTopic);
+    console.log('ADDTOPIC, newTopic',newTopic);
     return $http.post('api/topics', topic)
     .then ( (response) => {
       self.topics.push(response.data);
+      console.log('RESPONSE DATA TOPIC', response.data);
       return response.data;
     });
   };
 
 
   this.getTopics = function() {
+    console.log(this.topics);
     return this.topics; };
 
-  this.getTopic = function(index) {
-    return books[index];};
+  this.getTopic = function(topicId){
+    console.log('AM I INVOKING GETTOPIC?');
+    return $http.get(`/api/topics/${topicId}`)
+    .then ( function (response) {
+      return response;
+    });
+  };
+
+  this.getTopicDetails = function(){
+    return $http.get('api/topics');
+  };
+
+
+
 
   }
 ])

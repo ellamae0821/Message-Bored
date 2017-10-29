@@ -3,7 +3,7 @@ const express = require('express');
 const router = express.Router();
 const models = require('../models');
 const User = models.user;
-
+const Topic = models.topic;
 
 
 
@@ -32,7 +32,7 @@ router.post('/', (req, res) => {
 
 
 router.get('/:id', (req, res) => {
-  console.log('ID ISSSSS: ', req.params.id);
+  console.log('Router is getting single USER id for #:', req.params.id);
   var userID = parseInt(req.params.id);
   return User.findById(userID)
   .then( (user) => {
